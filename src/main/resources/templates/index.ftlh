@@ -49,8 +49,8 @@
 
 
     <#if number?? && noErrors??>
-        Your submitted number and conversion to hexadecimal<br>
-        Decimal: ${number.getValue()}<br>
+        Your submitted number and conversion<br>
+        Converted to ${number.getNotation()}: ${number.getValue()}<br>
     <#else>
 
     </#if>

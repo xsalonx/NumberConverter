@@ -1,6 +1,6 @@
 package com.springTutorial.controller;
 
-import com.springTutorial.model.Converter;
+import com.springTutorial.servise.Converter;
 import com.springTutorial.model.Number;
 import com.springTutorial.model.ConversionData;
 
@@ -37,13 +37,10 @@ public class MController {
 
 
         Converter converter = new Converter(conversionData.createNumber());
-        try {
-            Number number = converter.convert(conversionData.getNotationTo());
-            model.addAttribute("number", number);
-            System.out.println(number);
-        } catch (CloneNotSupportedException e) {
-            System.out.println(e.getMessage());
-        }
+
+        Number number = converter.convert(conversionData.getNotationTo());
+        model.addAttribute("number", number);
+        System.out.println(number);
 
 
         System.out.println(conversionData);

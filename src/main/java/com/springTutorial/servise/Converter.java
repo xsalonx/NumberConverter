@@ -1,5 +1,6 @@
-package com.springTutorial.model;
+package com.springTutorial.servise;
 
+import com.springTutorial.model.Number;
 import lombok.Getter;
 
 import java.util.*;
@@ -23,6 +24,7 @@ public class Converter {
 
         numericBaseNotations.add("10");
         numericBaseNotations.add("16");
+        numericBaseNotations.add("8");
 
         toDecimalLambda.put("roman", Converter::romanToDecimal);
         fromDecimalToOther.put("roman", Converter::convertToRoman);
@@ -53,6 +55,7 @@ public class Converter {
         String notation = number.getNotation();
         if (! isNotationHandled(notation))
             throw new IllegalArgumentException("notation <" + notation + "> is not handled");
+        this.number = number;
     }
 
     static public ArrayList<String> getHandledNotations() {
@@ -65,9 +68,9 @@ public class Converter {
         return numericBaseNotations.contains(notations) || fromDecimalToOther.containsKey(notations);
     }
 
-    public Number convert(String notation) throws CloneNotSupportedException {
+    public Number convert(String notation) {
         if (this.number.getNotation().equals(notation))
-            return (Number) this.number.clone();
+            return this.number.copy();
 
         if (numericBaseNotations.contains(notation)) {
             return (new Converter(this.toDecimal())).toStandardNotation(notation);
@@ -93,13 +96,18 @@ public class Converter {
     private Number toStandardNotation(String notation) {
         int base = Integer.parseInt(notation);
         int value = Integer.parseInt(this.number.getValue(), Integer.parseInt(this.number.getNotation()));
-
+        int digit;
         if (value == 0) {
             return new Number("0", notation);
         }
         StringBuilder numberStr = new StringBuilder();
         while (value > 0) {
-            numberStr.insert(0, value % base);
+            digit = value % base;
+            if (digit < 10) {
+                numberStr.insert(0, digit);
+            } else {
+                numberStr.insert(0, (char) (digit + 87));
+            }
             value /= base;
         }
 
@@ -147,12 +155,14 @@ public class Converter {
         int v, u;
         for (int i = 0; i < values.size(); i++) {
             v = values.get(i);
-            while (v <= value) {
+            while (value - v >= 0) {
                 strValue.append(numberToRomanDigits.get(v));
                 value -= v;
             }
             if (value > 0) {
                 u = values.get(i + 1);
+                if (u >= v / 2)
+                    u = values.get(i + 2);
                 if (value - (v - u) >= 0) {
                     strValue.append(numberToRomanDigits.get(u));
                     strValue.append(numberToRomanDigits.get(v));
