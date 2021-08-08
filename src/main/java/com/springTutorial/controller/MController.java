@@ -1,5 +1,9 @@
 package com.springTutorial.controller;
+
+import com.springTutorial.model.Converter;
 import com.springTutorial.model.Number;
+import com.springTutorial.model.ConversionData;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,27 +16,37 @@ public class MController {
 
     @GetMapping("/")
     public String getIndexR(Model model) {
+        model.addAttribute("number", new ConversionData());
+        model.addAttribute("handledNotations", Converter.getHandledNotations());
         return "redirect:/index";
     }
+
     @GetMapping("/index")
     public String getIndex(Model model) {
+        model.addAttribute("number", new ConversionData());
+        model.addAttribute("handledNotations", Converter.getHandledNotations());
+
         return "index";
     }
 
-    @GetMapping("/converter")
-    public String getConverter(Model model) {
-        model.addAttribute("number", new Number("0"));
-        return "converter";
-    }
-
-    @PostMapping("/converter")
-    public String postConverter(Number number, BindingResult bindingResult, Model model) {
+    @PostMapping("/index")
+    public String postConverter(ConversionData conversionData, BindingResult bindingResult, Model model) {
+        model.addAttribute("handledNotations", Converter.getHandledNotations());
         if (!bindingResult.hasErrors())
             model.addAttribute("noErrors", true);
 
-        model.addAttribute("number", number);
 
-        System.out.println(number);
-        return "converter";
+        Converter converter = new Converter(conversionData.createNumber());
+        try {
+            Number number = converter.convert(conversionData.getNotationTo());
+            model.addAttribute("number", number);
+            System.out.println(number);
+        } catch (CloneNotSupportedException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+        System.out.println(conversionData);
+        return "index";
     }
 }

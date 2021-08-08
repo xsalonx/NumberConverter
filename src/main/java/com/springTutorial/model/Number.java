@@ -1,33 +1,24 @@
 package com.springTutorial.model;
 
-import javax.validation.constraints.NotEmpty;
+import lombok.*;
 
-public class Number {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class Number implements Cloneable{
+    static final String defaultNotation = "10";
     private String value;
-
-    public Number toHex() {
-        return new Number(Integer.toHexString(Integer.parseInt(this.value)));
-    }
-
+    private String notation;
 
     public Number(String value) {
         this.value = value;
+        this.notation = defaultNotation;
     }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
 
     @Override
-    public String toString() {
-        return "StrNumberWithBase{" +
-                "value='" + value + '\'' +
-                '}';
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
-
 }
