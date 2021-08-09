@@ -14,16 +14,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class MController {
 
+    private static final String CONVERSION_DATA_ATTR_NAME = "conversionData";
+
     @GetMapping("/")
     public String getIndexR(Model model) {
-        model.addAttribute("number", new ConversionData());
+        model.addAttribute(CONVERSION_DATA_ATTR_NAME, new ConversionData());
         model.addAttribute("handledNotations", Converter.getHandledNotations());
         return "redirect:/index";
     }
 
     @GetMapping("/index")
     public String getIndex(Model model) {
-        model.addAttribute("number", new ConversionData());
+        model.addAttribute(CONVERSION_DATA_ATTR_NAME, new ConversionData());
         model.addAttribute("handledNotations", Converter.getHandledNotations());
 
         return "index";
@@ -31,16 +33,23 @@ public class MController {
 
     @PostMapping("/index")
     public String postConverter(ConversionData conversionData, BindingResult bindingResult, Model model) {
+//        model.addAttribute(CONVERSION_DATA_ATTR_NAME, conversionData);
         model.addAttribute("handledNotations", Converter.getHandledNotations());
         if (!bindingResult.hasErrors())
             model.addAttribute("noErrors", true);
 
+        System.out.println(conversionData);
 
-        Converter converter = new Converter(conversionData.createNumber());
+        Number receivedNumber = conversionData.createNumber();
+        Converter converter = new Converter(receivedNumber);
 
-        Number number = converter.convert(conversionData.getNotationTo());
-        model.addAttribute("number", number);
-        System.out.println(number);
+        try {
+            Number number = converter.convert(conversionData.getNotationTo());
+            model.addAttribute("number", number);
+            System.out.println(number);
+        } catch (NumberFormatException e) {
+            model.addAttribute("number", new Number("incorrect format or too big number", receivedNumber.getNotation()));
+        }
 
 
         System.out.println(conversionData);

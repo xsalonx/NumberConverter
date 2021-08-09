@@ -20,6 +20,6 @@ public class ConversionData {
         this.notationTo = notationTo;
     }
     public Number createNumber() {
-        return new Number(this.value, this.notationFrom);
+        return new Number(this.value, this.notationFrom != null ? this.notationFrom : "10");
     }
 }

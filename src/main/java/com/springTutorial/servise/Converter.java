@@ -49,7 +49,7 @@ public class Converter {
         }
     }
 
-    private Number number;
+    private final Number number;
 
     public Converter(Number number) throws IllegalArgumentException{
         String notation = number.getNotation();
@@ -68,9 +68,7 @@ public class Converter {
         return numericBaseNotations.contains(notations) || fromDecimalToOther.containsKey(notations);
     }
 
-    public Number convert(String notation) {
-        if (this.number.getNotation().equals(notation))
-            return this.number.copy();
+    public Number convert(String notation) throws NumberFormatException {
 
         if (numericBaseNotations.contains(notation)) {
             return (new Converter(this.toDecimal())).toStandardNotation(notation);
@@ -96,6 +94,9 @@ public class Converter {
     private Number toStandardNotation(String notation) {
         int base = Integer.parseInt(notation);
         int value = Integer.parseInt(this.number.getValue(), Integer.parseInt(this.number.getNotation()));
+        boolean negative = value < 0;
+        value = value < 0 ? -value : value;
+
         int digit;
         if (value == 0) {
             return new Number("0", notation);
@@ -110,6 +111,8 @@ public class Converter {
             }
             value /= base;
         }
+        if (negative)
+            numberStr.insert(0, "-");
 
         return new Number(numberStr.toString(), notation);
     }
@@ -117,10 +120,13 @@ public class Converter {
     private Number romanToDecimal() {
         if (this.number.getValue().equals("nulla"))
             return new Number("0");
+
         String strValue = this.number.getValue();
+        boolean negative = strValue.charAt(0) == '-';
+        int offset = negative ? 1 : 0;
         int value = 0, counter = 1, currCharacterValue, prevCharactersValue;
-        char digit = strValue.charAt(0), currCharacter;
-        for (int i = 1; i < strValue.length(); i++) {
+        char digit = strValue.charAt(0 + offset), currCharacter;
+        for (int i = 1 + offset; i < strValue.length(); i++) {
             currCharacter = strValue.charAt(i);
             if (currCharacter == digit)
                 counter++;
@@ -140,7 +146,7 @@ public class Converter {
             }
         }
 
-        return new Number(String.valueOf(value));
+        return new Number((negative ? "-" : "") + String.valueOf(value));
     }
 
 
@@ -148,6 +154,9 @@ public class Converter {
         int value = Integer.parseInt(this.number.getValue(), Integer.parseInt(this.number.getNotation()));
         if (value == 0)
             return new Number("nulla", "roman");
+
+        boolean negative = value < 0;
+        value = negative ? -value : value;
 
         List<Integer> values = new ArrayList<>(numberToRomanDigits.keySet());
         values.sort(Collections.reverseOrder());
@@ -171,7 +180,7 @@ public class Converter {
             }
 
         }
-        return new Number(strValue.toString(), "roman");
+        return new Number((negative ? "-" : "") + strValue.toString(), "roman");
     }
 
 }
