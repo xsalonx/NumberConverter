@@ -1,11 +1,11 @@
 <#import "/spring.ftl" as spring />
-<#function if cond then="" else="">
-    <#if cond>
-        ${then}
-    <#else>
-        ${else}
-    </#if>
-</#function>
+<#--<#function if cond then="" else="">-->
+<#--    <#if cond>-->
+<#--        ${then}-->
+<#--    <#else>-->
+<#--        ${else}-->
+<#--    </#if>-->
+<#--</#function>-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,19 +24,20 @@
 </head>
 
 <body>
-<div id="header" class="jumbotron text-center bg-primary w-50 mx-auto">
+<div id="header" class="jumbotron text-center bg-primary w-75 mx-auto">
     <h2 class="text-light">Numbers Converter</h2>
 
 </div>
 
 <div id="content" class="contentContainer w-75 mx-auto" style="background-color: aliceblue">
 
-    <form action="/index" method="post" class="d-flex align-items-center">
+    <form action="/index" method="post" class="d-md-flex align-items-center">
         <div class="p-2 flex-fill justify-content-center">
             <div>From notation:</div>
-            <select disabled="disabled" type="text" name="notationFrom" class="form-select w-75"
+            <select disabled="disabled" type="text" name="notationFrom" class="form-select w-50"
                     aria-label="Default select example">
-                <option selected="selected" value="${conversionData.getNotationFrom()!'10'}">${conversionData.getNotationFrom()!'10'}</option>
+                <option selected="selected"
+                        value="${conversionData.getNotationFrom()!'10'}">${conversionData.getNotationFrom()!'10'}</option>
                 <#list handledNotations>
                     <#items as notation>
                         <#if notation != conversionData.getNotationFrom()!'10'>
@@ -46,18 +47,19 @@
                 </#list>
             </select>
             <div>Value:</div>
-            <label>
+            <label class="w-50">
                 <input type="text" name="value" value="${conversionData.getValue()!''}" placeholder="pass some number"/>
             </label>
         </div>
 
         <div class="p-2 flex-fill justify-content-center align-items-center">
-            <input type="submit" value="convert to"/>
+            <input type="submit" value="convert"/>
         </div>
         <div class="p-2 flex-fill justify-content-center">
-            <div>notation:</div>
-            <select type="text" name="notationTo" class="form-select w-75" aria-label="Default select example">
-                <option selected="selected" value="${conversionData.getNotationTo()!'16'}">${conversionData.getNotationTo()!'16'}</option>
+            <div>to notation:</div>
+            <select type="text" name="notationTo" class="form-select w-50" aria-label="Default select example">
+                <option selected="selected"
+                        value="${conversionData.getNotationTo()!'16'}">${conversionData.getNotationTo()!'16'}</option>
                 <#list handledNotations>
                     <#items as notation>
                         <#if notation != conversionData.getNotationTo()!'16'>
@@ -66,13 +68,11 @@
                     </#items>
                 </#list>
             </select>
-            <div>
-                <p>Value:
-                    <#if number?? && noErrors??>
-                        <br>${number.getValue()}</br>
-                    </#if>
-                </p>
-
+            <div class="w-50">
+                <div>Value:</div>
+                <label class="w-50">
+                    <input type="text" value="${(number?? && noErrors??)?then(number.getValue(), '')}" readonly="readonly"/>
+                </label>
             </div>
         </div>
     </form>

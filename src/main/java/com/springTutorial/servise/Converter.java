@@ -13,6 +13,7 @@ interface Lambda {
 
 @Getter
 public class Converter {
+    private final int _a_char_to_int_minus_10 = 87;
     private static HashSet<String> numericBaseNotations;
     private static HashMap<String, Lambda> fromDecimalToOther;
     private static HashMap<String, Lambda> toDecimalLambda;
@@ -25,6 +26,7 @@ public class Converter {
         numericBaseNotations.add("10");
         numericBaseNotations.add("16");
         numericBaseNotations.add("8");
+        numericBaseNotations.add("2");
 
         toDecimalLambda.put("roman", Converter::romanToDecimal);
         fromDecimalToOther.put("roman", Converter::convertToRoman);
@@ -92,12 +94,12 @@ public class Converter {
     }
 
     private Number toStandardNotation(String notation) {
-        int base = Integer.parseInt(notation);
-        int value = Integer.parseInt(this.number.getValue(), Integer.parseInt(this.number.getNotation()));
+        long base = Integer.parseInt(notation);
+        long value = Integer.parseInt(this.number.getValue(), Integer.parseInt(this.number.getNotation()));
         boolean negative = value < 0;
         value = value < 0 ? -value : value;
 
-        int digit;
+        long digit;
         if (value == 0) {
             return new Number("0", notation);
         }
@@ -107,7 +109,7 @@ public class Converter {
             if (digit < 10) {
                 numberStr.insert(0, digit);
             } else {
-                numberStr.insert(0, (char) (digit + 87));
+                numberStr.insert(0, (char) (digit + _a_char_to_int_minus_10));
             }
             value /= base;
         }
@@ -124,8 +126,8 @@ public class Converter {
         String strValue = this.number.getValue();
         boolean negative = strValue.charAt(0) == '-';
         int offset = negative ? 1 : 0;
-        int value = 0, counter = 1, currCharacterValue, prevCharactersValue;
-        char digit = strValue.charAt(0 + offset), currCharacter;
+        long value = 0, counter = 1, currCharacterValue, prevCharactersValue;
+        char digit = strValue.charAt(offset), currCharacter;
         for (int i = 1 + offset; i < strValue.length(); i++) {
             currCharacter = strValue.charAt(i);
             if (currCharacter == digit)
@@ -151,7 +153,7 @@ public class Converter {
 
 
     private Number convertToRoman() {
-        int value = Integer.parseInt(this.number.getValue(), Integer.parseInt(this.number.getNotation()));
+        long value = Integer.parseInt(this.number.getValue(), Integer.parseInt(this.number.getNotation()));
         if (value == 0)
             return new Number("nulla", "roman");
 

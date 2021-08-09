@@ -33,7 +33,7 @@ public class MController {
 
     @PostMapping("/index")
     public String postConverter(ConversionData conversionData, BindingResult bindingResult, Model model) {
-//        model.addAttribute(CONVERSION_DATA_ATTR_NAME, conversionData);
+        model.addAttribute(CONVERSION_DATA_ATTR_NAME, conversionData);
         model.addAttribute("handledNotations", Converter.getHandledNotations());
         if (!bindingResult.hasErrors())
             model.addAttribute("noErrors", true);
@@ -46,13 +46,10 @@ public class MController {
         try {
             Number number = converter.convert(conversionData.getNotationTo());
             model.addAttribute("number", number);
-            System.out.println(number);
         } catch (NumberFormatException e) {
             model.addAttribute("number", new Number("incorrect format or too big number", receivedNumber.getNotation()));
         }
 
-
-        System.out.println(conversionData);
         return "index";
     }
 }
