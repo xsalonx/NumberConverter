@@ -19,7 +19,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
             crossorigin="anonymous"></script>
-    <title>converter</title>
+    <title>NumberConverter</title>
 
 </head>
 
@@ -31,8 +31,8 @@
 
 <div id="content" class="contentContainer w-75 mx-auto" style="background-color: aliceblue">
 
-    <form action="/index" method="post" class="d-md-flex align-items-center">
-        <div class="p-2 flex-fill justify-content-center">
+    <form action="/converter" method="post" class="d-md-flex">
+        <div class="p-2 flex-fill align-top">
             <div>From notation:</div>
             <select disabled="disabled" type="text" name="notationFrom" class="form-select w-50"
                     aria-label="Default select example">
@@ -51,11 +51,12 @@
                 <input type="text" name="value" value="${conversionData.getValue()!''}" placeholder="pass some number"/>
             </label>
         </div>
-
         <div class="p-2 flex-fill justify-content-center align-items-center">
-            <input type="submit" value="convert"/>
+            <label>
+                <input type="submit" value="convert"/>
+            </label>
         </div>
-        <div class="p-2 flex-fill justify-content-center">
+        <div class="p-2 flex-fill align-top">
             <div>to notation:</div>
             <select type="text" name="notationTo" class="form-select w-50" aria-label="Default select example">
                 <option selected="selected"
@@ -72,19 +73,16 @@
                 <div>Value:</div>
                 <#if !error??>
                     <label class="w-50">
-                        <input type="text" value="${(number?? && noErrors??)?then(number.getValue(), '')}"
-                               readonly="readonly"/>
+                        <textarea readonly="readonly">${(number?? && noErrors??)?then(number.getValue(), '')}</textarea>
                     </label>
                 <#else>
                     <label class="w-50">
-                        <textarea readonly="readonly">${error}</textarea>
+                        <textarea readonly="readonly" rows="5">${error}</textarea>
                     </label>
                 </#if>
             </div>
         </div>
     </form>
-
-
 </div>
 
 </body>

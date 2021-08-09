@@ -55,7 +55,7 @@ public class Converter {
 
     public Converter(Number number) throws IllegalArgumentException{
         String notation = number.getNotation();
-        if (! isNotationHandled(notation))
+        if (! isNotationHandled(notation) || number.getValue() == null || number.getValue().equals(""))
             throw new IllegalArgumentException("notation <" + notation + "> is not handled");
         this.number = number;
     }
@@ -153,7 +153,6 @@ public class Converter {
                 }
             }
         }
-
         return new Number((negative ? "-" : "") + String.valueOf(value));
     }
 
@@ -189,7 +188,6 @@ public class Converter {
                     value -= (v - u);
                 }
             }
-
         }
         return new Number((negative ? "-" : "") + strValue.toString(), "roman");
     }

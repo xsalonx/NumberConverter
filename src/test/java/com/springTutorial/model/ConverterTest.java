@@ -139,4 +139,20 @@ public class ConverterTest {
         //then
         assertEquals(new Number("-377", "8"), result);
     }
+    @Test
+    void romanTooBigNumber() {
+        // given
+        Number number = new Number("4000", "10");
+        Converter converter = new Converter(number);
+        //then
+        assertThrows(NumberFormatException.class, () -> converter.convert("roman"));
+    }
+    @Test
+    void romanIllegalCharacter() {
+        // given
+        Number number = new Number("40fc", "10");
+        Converter converter = new Converter(number);
+        //then
+        assertThrows(NumberFormatException.class, () -> converter.convert("roman"));
+    }
 }

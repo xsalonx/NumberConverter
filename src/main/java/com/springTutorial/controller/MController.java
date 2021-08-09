@@ -20,18 +20,18 @@ public class MController {
     public String getIndexR(Model model) {
         model.addAttribute(CONVERSION_DATA_ATTR_NAME, new ConversionData());
         model.addAttribute("handledNotations", Converter.getHandledNotations());
-        return "redirect:/index";
+        return "redirect:/converter";
     }
 
-    @GetMapping("/index")
+    @GetMapping("/converter")
     public String getIndex(Model model) {
         model.addAttribute(CONVERSION_DATA_ATTR_NAME, new ConversionData());
         model.addAttribute("handledNotations", Converter.getHandledNotations());
 
-        return "index";
+        return "converter";
     }
 
-    @PostMapping("/index")
+    @PostMapping("/converter")
     public String postConverter(ConversionData conversionData, BindingResult bindingResult, Model model) {
         model.addAttribute(CONVERSION_DATA_ATTR_NAME, conversionData);
         model.addAttribute("handledNotations", Converter.getHandledNotations());
@@ -41,16 +41,16 @@ public class MController {
         System.out.println(conversionData);
 
         Number receivedNumber = conversionData.createNumber();
-        Converter converter = new Converter(receivedNumber);
-
-        try {
-            Number number = converter.convert(conversionData.getNotationTo());
-            model.addAttribute("number", number);
-        } catch (NumberFormatException e) {
-            model.addAttribute("error", "Incorrect format or too big value\n" + e.getMessage());
-            model.addAttribute("number", new Number("null", receivedNumber.getNotation()));
+        if (receivedNumber.getValue() != null && !receivedNumber.getValue().equals("")) {
+            Converter converter = new Converter(receivedNumber);
+            try {
+                Number number = converter.convert(conversionData.getNotationTo());
+                model.addAttribute("number", number);
+            } catch (NumberFormatException e) {
+                model.addAttribute("error", "Incorrect format or too big value\n" + e.getMessage());
+                model.addAttribute("number", new Number("null", receivedNumber.getNotation()));
+            }
         }
-
-        return "index";
+        return "converter";
     }
 }
