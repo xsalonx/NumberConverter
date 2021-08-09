@@ -37,11 +37,11 @@ With default configuration in __**application.properties**__ api will be running
  ```
  and in order to run api execute
  ```shell
- java -jar target/numberConverterREST-1.0.0-SNAPSHOT.jar
+ java -jar target/numberConverterREST-1.0.1.jar
  ```
  or
  ```shell
- java -cp target/numberConverterREST-1.0.0-SNAPSHOT.jar org.springframework.boot.loader.JarLauncher 
+ java -cp target/numberConverterREST-1.0.1.jar org.springframework.boot.loader.JarLauncher
  ```
  if version is changed there will be necessity to use other version (in name of jar file) in commands above.
  

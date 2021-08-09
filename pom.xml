@@ -5,7 +5,7 @@
 
     <groupId>com.springTutorial.numbersConverterREST</groupId>
     <artifactId>numberConverterREST</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1</version>
     <name>numberConverterREST</name>
     <description>REST api with functionality of converting numbers from one base to other</description>
 
