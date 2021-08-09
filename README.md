@@ -43,6 +43,7 @@ With default configuration in __**application.properties**__ api will be running
  ```shell
  java -cp target/numberConverterREST-1.0.0-SNAPSHOT.jar org.springframework.boot.loader.JarLauncher 
  ```
+ if version is changed there will be necessity to use other version in commands above.
  
  
  <br><br>
