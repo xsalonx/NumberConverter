@@ -45,8 +45,8 @@ With defualt configuration in __**application.properties**__ api will be running
  
  
  <br><br>
- #### Adnotations
+ #### Annotations
  ad.1<a id="ad1"></a>
- currently roman charcters corresponding to numbers over thousend are not handled, it means **V, X, L, C, D, M** with overline wich means multiplying by thousand, e.g. **V** with overline means 5000 when signle **V** means 5; so converting big numbers to roman may reults in e.g. MMMMMMMMMMMMMMMMMCXIX;
+ currently roman characters corresponding to numbers over thousand are not handled, it means **V, X, L, C, D, M** with overline wich means multiplying by thousand, e.g. **V** with overline means 5000 when signle **V** means 5; so converting big numbers to roman may reults in e.g. MMMMMMMMMMMMMMMMMCXIX;
 
  
