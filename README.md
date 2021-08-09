@@ -16,9 +16,9 @@ In case of some error; incorrect format of passed number or overflow there will 
   ... might be more in future versions
   
 ### Configuration
-With default configuration in __**application.properties**__ api will be running on __localhost:8080__
+With default configuration in __**application.properties**__ api will be running on __localhost:8080__ or __localhost:8080/converter__
   
-### Used technologies/maven dependencies:
+### Used technologies/dependencies:
   1. java 1.8.0_302
   2. maven 3.5.4
   3. spring boot 2.2.2
