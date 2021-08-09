@@ -8,7 +8,8 @@ There is defined set of handled notations:
   1. decimal
   2. hexadecimal
   3. octal
-  4. roman, currently roman charcters corresponding to numbers over thousend it means ![formula](https://render.githubusercontent.com/render/math?math=e^{i%20\pi}%20=%20-1)
+  4. roman, currently roman charcters corresponding to numbers over thousend it means V, X, L, C, D, M with overline wich means multiplying by thousand
+<!-- ![](https://render.githubusercontent.com/render/math?math=e%5E%7Bi%20%5Cpi%7D%20%3D%20-1&mode=inline) -->
 
 
 
