@@ -70,9 +70,16 @@
             </select>
             <div class="w-50">
                 <div>Value:</div>
-                <label class="w-50">
-                    <input type="text" value="${(number?? && noErrors??)?then(number.getValue(), '')}" readonly="readonly"/>
-                </label>
+                <#if !error??>
+                    <label class="w-50">
+                        <input type="text" value="${(number?? && noErrors??)?then(number.getValue(), '')}"
+                               readonly="readonly"/>
+                    </label>
+                <#else>
+                    <label class="w-50">
+                        <textarea readonly="readonly">${error}</textarea>
+                    </label>
+                </#if>
             </div>
         </div>
     </form>

@@ -47,7 +47,8 @@ public class MController {
             Number number = converter.convert(conversionData.getNotationTo());
             model.addAttribute("number", number);
         } catch (NumberFormatException e) {
-            model.addAttribute("number", new Number("incorrect format or too big number", receivedNumber.getNotation()));
+            model.addAttribute("error", "Incorrect format or too big value\n" + e.getMessage());
+            model.addAttribute("number", new Number("null", receivedNumber.getNotation()));
         }
 
         return "index";

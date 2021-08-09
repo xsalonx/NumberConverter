@@ -93,9 +93,10 @@ public class Converter {
             return new Number("null", "null");
     }
 
-    private Number toStandardNotation(String notation) {
+    private Number toStandardNotation(String notation) throws NumberFormatException {
         long base = Integer.parseInt(notation);
         long value = Integer.parseInt(this.number.getValue(), Integer.parseInt(this.number.getNotation()));
+
         boolean negative = value < 0;
         value = value < 0 ? -value : value;
 
@@ -119,7 +120,7 @@ public class Converter {
         return new Number(numberStr.toString(), notation);
     }
 
-    private Number romanToDecimal() {
+    private Number romanToDecimal() throws NumberFormatException {
         if (this.number.getValue().equals("nulla"))
             return new Number("0");
 
@@ -127,22 +128,27 @@ public class Converter {
         boolean negative = strValue.charAt(0) == '-';
         int offset = negative ? 1 : 0;
         long value = 0, counter = 1, currCharacterValue, prevCharactersValue;
-        char digit = strValue.charAt(offset), currCharacter;
+        char prevCharacter = strValue.charAt(offset), currCharacter;
         for (int i = 1 + offset; i < strValue.length(); i++) {
             currCharacter = strValue.charAt(i);
-            if (currCharacter == digit)
+            if (currCharacter == prevCharacter)
                 counter++;
             else {
-                prevCharactersValue = romanDigitToNumber.get(digit);
-                currCharacterValue = romanDigitToNumber.get(currCharacter);
+                prevCharactersValue = romanDigitToNumber.getOrDefault(prevCharacter, 0);
+                currCharacterValue = romanDigitToNumber.getOrDefault(currCharacter, 0);
+                if (prevCharactersValue == 0)
+                    throw new NumberFormatException("Incorrect format of roman number contained not allowed sign <" + prevCharacter + ">");
+                if (currCharacterValue == 0)
+                    throw new NumberFormatException("Incorrect format of roman number contained not allowed sign <" + currCharacter + ">");
+
                 if (currCharacterValue < prevCharactersValue) {
                     value += counter * prevCharactersValue;
-                    digit = currCharacter;
+                    prevCharacter = currCharacter;
                     counter = 1;
                 } else {
                     value += (currCharacterValue - counter * prevCharactersValue); // counter always will be equal 1;
                     i++;
-                    digit = strValue.charAt(i);
+                    prevCharacter = strValue.charAt(i);
                     counter = 1;
                 }
             }
@@ -159,6 +165,9 @@ public class Converter {
 
         boolean negative = value < 0;
         value = negative ? -value : value;
+
+        if (value > 3999)
+            throw new NumberFormatException("It is too big number fo roman notations, currently api handle number less than 4000");
 
         List<Integer> values = new ArrayList<>(numberToRomanDigits.keySet());
         values.sort(Collections.reverseOrder());
