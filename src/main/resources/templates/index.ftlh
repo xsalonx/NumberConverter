@@ -31,7 +31,7 @@
 
 <div id="content" class="contentContainer w-75 mx-auto" style="background-color: aliceblue">
 
-    <form action="/index" method="post" class="d-flex">
+    <form action="/index" method="post" class="d-flex align-items-center">
         <div class="p-2 flex-fill justify-content-center">
             <div>From notation:</div>
             <select disabled="disabled" type="text" name="notationFrom" class="form-select w-75"
@@ -51,7 +51,7 @@
             </label>
         </div>
 
-        <div class="p-2 flex-fill justify-content-center">
+        <div class="p-2 flex-fill justify-content-center align-items-center">
             <input type="submit" value="convert to"/>
         </div>
         <div class="p-2 flex-fill justify-content-center">
@@ -67,10 +67,12 @@
                 </#list>
             </select>
             <div>
-                <#if number?? && noErrors??>
-                    Converted to ${number.getNotation()} notation<br>
-                    ${number.getValue()}<br>
-                </#if>
+                <p>Value:
+                    <#if number?? && noErrors??>
+                        <br>${number.getValue()}</br>
+                    </#if>
+                </p>
+
             </div>
         </div>
     </form>
