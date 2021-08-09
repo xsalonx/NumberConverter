@@ -9,7 +9,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Number implements Cloneable{
+public class Number {
     static final String defaultNotation = "10";
     private String value;
     private String notation;
