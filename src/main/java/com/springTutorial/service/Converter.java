@@ -1,4 +1,4 @@
-package com.springTutorial.servise;
+package com.springTutorial.service;
 
 import com.springTutorial.model.Number;
 import lombok.Getter;

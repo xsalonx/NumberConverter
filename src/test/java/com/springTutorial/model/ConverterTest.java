@@ -1,7 +1,7 @@
 package com.springTutorial.model;
 
 
-import com.springTutorial.servise.Converter;
+import com.springTutorial.service.Converter;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

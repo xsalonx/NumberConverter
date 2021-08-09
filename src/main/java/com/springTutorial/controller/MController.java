@@ -1,6 +1,6 @@
 package com.springTutorial.controller;
 
-import com.springTutorial.servise.Converter;
+import com.springTutorial.service.Converter;
 import com.springTutorial.model.Number;
 import com.springTutorial.model.ConversionData;
 

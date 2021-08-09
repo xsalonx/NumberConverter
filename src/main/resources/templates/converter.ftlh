@@ -30,12 +30,11 @@
 </div>
 
 <div id="content" class="contentContainer w-75 mx-auto" style="background-color: aliceblue">
-
     <form action="/converter" method="post" class="d-md-flex">
         <div class="p-2 flex-fill align-top">
             <div>From notation:</div>
             <select disabled="disabled" type="text" name="notationFrom" class="form-select w-50"
-                    aria-label="Default select example">
+                    aria-label="Default select example" data-toggle="tooltip" title="TODO logged user will be able to use rest functionality">
                 <option selected="selected"
                         value="${conversionData.getNotationFrom()!'10'}">${conversionData.getNotationFrom()!'10'}</option>
                 <#list handledNotations>
@@ -51,7 +50,7 @@
                 <input type="text" name="value" value="${conversionData.getValue()!''}" placeholder="pass some number"/>
             </label>
         </div>
-        <div class="p-2 flex-fill justify-content-center align-items-center">
+        <div class="p-2 pt-2 flex-fill justify-content-center align-items-center">
             <label>
                 <input type="submit" value="convert"/>
             </label>
