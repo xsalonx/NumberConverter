@@ -14,7 +14,7 @@ public class ConversionData {
     private String notationFrom;
     private String notationTo;
 
-    ConversionData(String value, String notationTo) {
+    public ConversionData(String value, String notationTo) {
         this.value = value;
         this.notationFrom = defaultNotation;
         this.notationTo = notationTo;
