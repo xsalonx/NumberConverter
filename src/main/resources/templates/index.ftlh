@@ -21,6 +21,18 @@
             crossorigin="anonymous"></script>
     <title>NumberConverter</title>
 
+    <script>
+        function convertReq() {
+            const notationFrom = document.getElementById("select-notation-from").value;
+            const notationTo = document.getElementById("select-notation-to").value;
+            const value = document.getElementById("input-value").value;
+            const req = new XMLHttpRequest()
+            console.log(notationTo, notationFrom, value);
+            req.open("GET", 'converter/?value=' + value + '&notationFrom=' + notationFrom + '&notationTo=' + notationTo, false);
+            req.send(null);
+            alert(req.response);
+        }
+    </script>
 </head>
 
 <body>
@@ -30,16 +42,18 @@
 </div>
 
 <div id="content" class="contentContainer w-75 mx-auto" style="background-color: aliceblue">
-    <form action="/converter" method="post" class="d-md-flex">
+    <form id="conversionForm" method="get" class="d-md-flex">
         <div class="p-2 flex-fill align-top">
             <div>From notation:</div>
-            <select disabled="disabled" type="text" name="notationFrom" class="form-select w-50"
-                    aria-label="Default select example" data-toggle="tooltip" title="TODO logged user will be able to use rest functionality">
+            <select id="select-notation-from" disabled="disabled" type="text" name="notationFrom" class="form-select w-50"
+                    aria-label="Default select example" data-toggle="tooltip"
+                    title="TODO logged user will be able to use rest functionality">
                 <option selected="selected"
-                        value="${conversionData.getNotationFrom()!'10'}">${conversionData.getNotationFrom()!'10'}</option>
+                        value="10">10
+                </option>
                 <#list handledNotations>
                     <#items as notation>
-                        <#if notation != conversionData.getNotationFrom()!'10'>
+                        <#if notation != '10'>
                             <option value=${notation}>${notation}</option>
                         </#if>
                     </#items>
@@ -47,22 +61,23 @@
             </select>
             <div>Value:</div>
             <label class="w-50">
-                <input type="text" name="value" value="${conversionData.getValue()!''}" placeholder="pass some number"/>
+                <input id="input-value" type="text" name="value" placeholder="pass some number"/>
             </label>
         </div>
         <div class="p-2 pt-2 flex-fill justify-content-center align-items-center">
             <label>
-                <input type="submit" value="convert"/>
+                <input type="submit" value="convert" onclick="convertReq()"/>
             </label>
         </div>
         <div class="p-2 flex-fill align-top">
             <div>to notation:</div>
-            <select type="text" name="notationTo" class="form-select w-50" aria-label="Default select example">
+            <select id="select-notation-to" type="text" name="notationTo" class="form-select w-50" aria-label="Default select example">
                 <option selected="selected"
-                        value="${conversionData.getNotationTo()!'16'}">${conversionData.getNotationTo()!'16'}</option>
+                        value="16">16
+                </option>
                 <#list handledNotations>
                     <#items as notation>
-                        <#if notation != conversionData.getNotationTo()!'16'>
+                        <#if notation != '16'>
                             <option value=${notation}>${notation}</option>
                         </#if>
                     </#items>
@@ -70,15 +85,10 @@
             </select>
             <div class="w-50">
                 <div>Value:</div>
-                <#if !error??>
-                    <label class="w-50">
-                        <textarea readonly="readonly">${(number?? && noErrors??)?then(number.getValue(), '')}</textarea>
-                    </label>
-                <#else>
-                    <label class="w-50">
-                        <textarea readonly="readonly" rows="5">${error}</textarea>
-                    </label>
-                </#if>
+                <label class="w-50">
+                    <textarea id="convertedValue" readonly="readonly"></textarea>
+                </label>
+
             </div>
         </div>
     </form>
