@@ -19,14 +19,12 @@ public class MController {
 
     @GetMapping("/")
     public String getIndexR(Model model) {
-        model.addAttribute(CONVERSION_DATA_ATTR_NAME, new ConversionData());
         model.addAttribute("handledNotations", Converter.getHandledNotations());
         return "redirect:/index";
     }
 
     @GetMapping("/index")
     public String getIndex(Model model) {
-        model.addAttribute(CONVERSION_DATA_ATTR_NAME, new ConversionData());
         model.addAttribute("handledNotations", Converter.getHandledNotations());
 
         return "index";
