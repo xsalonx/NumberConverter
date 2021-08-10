@@ -30,7 +30,11 @@
             console.log(notationTo, notationFrom, value);
             req.open("GET", 'converter/?value=' + value + '&notationFrom=' + notationFrom + '&notationTo=' + notationTo, false);
             req.send(null);
-            alert(req.response);
+            const resp = req.response
+            console.log(resp);
+            alert(resp);
+            const converterValue = document.getElementById("convertedValue");
+            converterValue.innerHTML = resp.value;
         }
     </script>
 </head>
@@ -42,7 +46,7 @@
 </div>
 
 <div id="content" class="contentContainer w-75 mx-auto" style="background-color: aliceblue">
-    <form id="conversionForm" method="get" class="d-md-flex">
+    <div id="conversionForm" method="get" class="d-md-flex">
         <div class="p-2 flex-fill align-top">
             <div>From notation:</div>
             <select id="select-notation-from" disabled="disabled" type="text" name="notationFrom" class="form-select w-50"
@@ -66,7 +70,7 @@
         </div>
         <div class="p-2 pt-2 flex-fill justify-content-center align-items-center">
             <label>
-                <input type="submit" value="convert" onclick="convertReq()"/>
+                <button onclick="convertReq()">convert</button>
             </label>
         </div>
         <div class="p-2 flex-fill align-top">
@@ -91,7 +95,7 @@
 
             </div>
         </div>
-    </form>
+    </div>
 </div>
 
 </body>
