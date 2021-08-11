@@ -1,11 +1,4 @@
 <#import "/spring.ftl" as spring />
-<#--<#function if cond then="" else="">-->
-<#--    <#if cond>-->
-<#--        ${then}-->
-<#--    <#else>-->
-<#--        ${else}-->
-<#--    </#if>-->
-<#--</#function>-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,19 +15,21 @@
     <title>NumberConverter</title>
 
     <script>
-        function convertReq() {
+        function convertRequest() {
             const notationFrom = document.getElementById("select-notation-from").value;
             const notationTo = document.getElementById("select-notation-to").value;
             const value = document.getElementById("input-value").value;
-            const req = new XMLHttpRequest()
-            console.log(notationTo, notationFrom, value);
-            req.open("GET", 'converter/?value=' + value + '&notationFrom=' + notationFrom + '&notationTo=' + notationTo, false);
-            req.send(null);
-            const resp = req.response
-            console.log(resp);
-            alert(resp);
-            const converterValue = document.getElementById("convertedValue");
-            converterValue.innerHTML = resp.value;
+
+            fetch('converter/?value=' + value + '&notationFrom=' + notationFrom + '&notationTo=' + notationTo, {
+                method: 'GET',
+            }).then(response => response.json())
+            .then(data => {
+                console.log(data);
+                const converterValue = document.getElementById("convertedValue");
+                converterValue.innerText = data.value;
+            }).catch(e => {
+                console.log(e);
+            })
         }
     </script>
 </head>
@@ -70,7 +65,7 @@
         </div>
         <div class="p-2 pt-2 flex-fill justify-content-center align-items-center">
             <label>
-                <button onclick="convertReq()">convert</button>
+                <button onclick="convertRequest()">convert</button>
             </label>
         </div>
         <div class="p-2 flex-fill align-top">
