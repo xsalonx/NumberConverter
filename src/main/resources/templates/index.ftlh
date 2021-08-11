@@ -14,24 +14,7 @@
             crossorigin="anonymous"></script>
     <title>NumberConverter</title>
 
-    <script>
-        function convertRequest() {
-            const notationFrom = document.getElementById("select-notation-from").value;
-            const notationTo = document.getElementById("select-notation-to").value;
-            const value = document.getElementById("input-value").value;
-
-            fetch('converter/?value=' + value + '&notationFrom=' + notationFrom + '&notationTo=' + notationTo, {
-                method: 'GET',
-            }).then(response => response.json())
-            .then(data => {
-                console.log(data);
-                const converterValue = document.getElementById("convertedValue");
-                converterValue.innerText = data.value;
-            }).catch(e => {
-                console.log(e);
-            })
-        }
-    </script>
+    <script src="/js/index.js"></script>
 </head>
 
 <body>
@@ -41,10 +24,10 @@
 </div>
 
 <div id="content" class="contentContainer w-75 mx-auto" style="background-color: aliceblue">
-    <div id="conversionForm" method="get" class="d-md-flex">
+    <div id="conversionForm" class="d-md-flex">
         <div class="p-2 flex-fill align-top">
             <div>From notation:</div>
-            <select id="select-notation-from" disabled="disabled" type="text" name="notationFrom" class="form-select w-50"
+            <select id="select-notation-from" disabled="disabled" name="notationFrom" class="form-select w-50"
                     aria-label="Default select example" data-toggle="tooltip"
                     title="TODO logged user will be able to use rest functionality">
                 <option selected="selected"
@@ -70,7 +53,7 @@
         </div>
         <div class="p-2 flex-fill align-top">
             <div>to notation:</div>
-            <select id="select-notation-to" type="text" name="notationTo" class="form-select w-50" aria-label="Default select example">
+            <select id="select-notation-to" name="notationTo" class="form-select w-50" aria-label="Default select example">
                 <option selected="selected"
                         value="16">16
                 </option>
